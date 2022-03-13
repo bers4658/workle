@@ -4,7 +4,7 @@ import Profile  from "../components/Profile.vue"
 
 const routes = [
     {
-        path: '/general',
+        path: '/',
         name: 'Главная',
         component: Workle
     },

@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="body">
+            {{ profiles.id }}
             <div class="profile">
                 <div>
                     <img class="photo_profile" :src="userImg">
@@ -35,7 +36,10 @@ export default {
             userProfileName: {},
             userName: {},
             img: {},
-            view:{}
+            view:{},
+
+
+            profiles: {}
         }; 
     },
     mounted(){  
@@ -47,7 +51,7 @@ export default {
             axios
             .get(`https://api.unsplash.com/photos/?client_id=vSZ88YrTBknu6CphDdw2FVIyBVwNW_ZR3SYuAFMc67c`)
             .then(response => {
-                this.profiles = response.data
+                this.profiles = response.data[0]
                 
             }); 
         }, 
@@ -115,6 +119,7 @@ export default {
   transform: rotate(45deg);
   margin-right: 10px;
   margin-top: 3px;
+  margin-left: 5px;
 }
 #eye::before,
 #eye::after {

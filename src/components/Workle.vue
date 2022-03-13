@@ -87,21 +87,48 @@ export default {
 <style scoped>
 .body{
     max-width: 1000px;
-    min-width: 320px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: -50px auto 0 auto
 }
+    @media( max-width: 1000px ){
+        .body{
+            max-width: 768px;
+        }
+    }
+    @media( max-width: 768px){
+        .body{
+            max-width: 480px;
+        }
+    }
+    @media(max-width:480px ){
+        .body{
+            max-width: 320px;
+        }
+    }
 .profile{
     display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
     margin: 0px 10px 0px 10px;
-    width: 320px;
-    height: 312px;
-    
+    width: 440px;
+    height: 380px;
 }
+    @media (max-width: 1000px){
+        .profile{
+            width: 320px;
+            height: 230px;
+        }
+    }
+    @media (max-width: 768px){
+        .profile{
+            width: 440px;
+            height: 380px;
+        }
+    }
+    @media (max-width: 480px){
+        .profile{
+            width: 320px;
+            height: 230px;
+        }
+    }
 .photo_profile{
-    
     float: left;
     margin: 10px;
     border-radius: 100px;
@@ -122,9 +149,27 @@ export default {
     margin-left: 50px;
 }
 .img{
-    width: 320px;
-    height: 230px;
+    width: 440px;
+    height: 300px;
 }
+    @media (max-width: 1000px){
+        .img{
+            width: 320px;
+            height: 230px;
+        }
+    }
+    @media (max-width: 768px){
+        .img{
+            width: 440px;
+            height: 300px;
+        }
+    }
+    @media (max-width: 480px){
+        .img{
+            width: 320px;
+            height: 230px;
+        }
+    }
  .views{
     float: right;
     color: #8D8D8D;
