@@ -1,49 +1,63 @@
 <template>
     <div>
-      {{ userId }}
-    <a href="#/general"> Назад
-    </a>
-
-        <!-- <div class="profile">
-                
-                    
-                        <div>
-                            <img class="photo_profile" :src="userId.user.profile_image.small">
-                        </div>
-                        <div class="name">
-                            {{ userId.user.name }}
-                        </div>
-                        <div class="user_name">
-                            {{ userId.user.username }}
-                        </div>
-                    
-               
+        <div class="body">
+            <div class="profile">
                 <div>
-                    <img class="img" :src="userId.urls.small">
+                    <img class="photo_profile" :src="userImg">
+                </div>
+                <div class="name">
+                    {{ userProfileName }}
+                </div>
+                <div class="user_name">
+                    @{{ userName }}
+                </div>
+                <div>
+                    <img class="img" :src="img">
                 </div>
                 <div class="views">
                     <span>
-                        51 200
+                        {{ view }}
                     </span>
                     <span id="eye"></span>
                 </div>
-        </div> -->
-        
+         </div>
     </div>
+</div>    
 </template>
 
-
-
 <script>
+import axios from 'axios'
 export default {
     name: 'Profile',
     data() {
         return {
-            userId: ""
+            userImg: {},
+            userProfileName: {},
+            userName: {},
+            img: {},
+            view:{}
         }; 
     },
     mounted(){  
-        this.userId = JSON.parse(localStorage.getItem('userId'))
+        this.loadImg(),
+        this.localStorage()
+    },
+    methods: {
+        loadImg(){
+            axios
+            .get(`https://api.unsplash.com/photos/?client_id=vSZ88YrTBknu6CphDdw2FVIyBVwNW_ZR3SYuAFMc67c`)
+            .then(response => {
+                this.profiles = response.data
+                
+            }); 
+        }, 
+        localStorage(){
+            this.userImg = JSON.parse(localStorage.getItem('userImg'))
+            this.userProfileName = JSON.parse(localStorage.getItem('userProfileName'))
+            this.userName = JSON.parse(localStorage.getItem('userName'))
+            this.img = JSON.parse(localStorage.getItem('img'))
+            this.view = JSON.parse(localStorage.getItem('view'))
+        },
     },
 }
 </script>
@@ -55,7 +69,6 @@ export default {
     margin-left: auto;
     margin-right: auto;
 }
-
 .profile{
     display: inline-block;
     margin-left: auto;
@@ -63,10 +76,8 @@ export default {
     margin: 0px 10px 0px 10px;
     width: 320px;
     height: 312px;
-    
 }
 .photo_profile{
-    
     float: left;
     margin: 10px;
     border-radius: 100px;
@@ -79,37 +90,29 @@ export default {
     float: left;
     margin-top: 10px;
     margin-left: 50px;
-
 }
-
 .user_name{
     position: absolute;
     float: left;
     margin-top: 25px;
     margin-left: 50px;
 }
-
 .img{
     width: 320px;
     height: 230px;
-
-
  }
-
  .views{
     float: right;
     color: #8D8D8D;
  }
-
  #eye {
   display: inline-block;
   position: relative;
-  width: 0.7em; /* ширина элемента */ 
-  height: 0.7em; /* высота элемента */ 
-  background: #8D8D8D; /* цвет иконки как цвет текста */ 
+  width: 0.7em; 
+  height: 0.7em; 
+  background: #8D8D8D; 
   border-radius: 70% 0 / 70%;
   transform: rotate(45deg);
-  
   margin-right: 10px;
   margin-top: 3px;
 }
@@ -129,6 +132,6 @@ export default {
   height: 30%;
   top: 35%;
   left: 35%;
-  background: inherit; /* цвет зрачка как у родителя */ 
+  background: inherit; 
 }
 </style>

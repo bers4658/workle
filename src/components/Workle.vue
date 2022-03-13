@@ -2,19 +2,13 @@
     <div>
         <div class="body">
             <div class="profile" v-for="profile in profiles" :key="profile.id">
-                <div 
-                    @click="saveIdInLocalStorage(profile)"
-                    style="cursor: pointer"
-                >
-                    <a 
-                        :href="`#/profile/${profile.id}`" 
-                        target="_blank"
-                    >
+                <div style="cursor: pointer">
+                    <a
+                        target="blank"
+                        :href="`#/profile/${profile.id}`"
+                        @click="saveLocalStorage(profile)">
                         <div>
-                            <img
-                                class="photo_profile"
-                                :src="profile.user.profile_image.small"
-                            >
+                            <img class="photo_profile" :src="profile.user.profile_image.small">
                         </div>
                         <div class="name">
                             {{ profile.user.name }}
@@ -59,10 +53,33 @@ export default {
                 this.profiles = response.data
             });
         },
-        saveIdInLocalStorage(id){
-            let parsedUserId = JSON.stringify(id)
-            localStorage.setItem("userId",parsedUserId)
-        }
+        saveLocalStorage(profile){
+            this.saveProfileImageInLocalStorage(profile.user.profile_image.small)
+            this.saveProfileNameInLocalStorage(profile.user.name)
+            this.saveUserNameInLocalStorage(profile.user.name)
+            this.saveImageInLocalStorage(profile.urls.small)
+            this.saveViewInLocalStorage(profile.likes)
+        },
+        saveProfileImageInLocalStorage(img){
+            let parsedUserImg = JSON.stringify(img)
+            localStorage.setItem("userImg",parsedUserImg)
+        },
+        saveProfileNameInLocalStorage(name){
+            let parsedProfileUserName = JSON.stringify(name)
+            localStorage.setItem("userProfileName",parsedProfileUserName)
+        },
+        saveUserNameInLocalStorage(userName){
+            let parsedProfileUserName = JSON.stringify(userName)
+            localStorage.setItem("userName",parsedProfileUserName)
+        },
+        saveImageInLocalStorage(img){
+            let parsedImg = JSON.stringify(img)
+            localStorage.setItem("img",parsedImg)
+        },
+        saveViewInLocalStorage(view){
+            let parsedView = JSON.stringify(view)
+            localStorage.setItem("view",parsedView)
+        },
     },
 }
 </script>
