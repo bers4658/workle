@@ -35,17 +35,20 @@
                 </div>
             </div>
         </main> 
-         <footer class="footer">
-            <ul @click="addCounter()">
-                <li><a href="#" @click="counter--">...</a></li>
-                <li><a class="block" id="block_1" href="#" @click="counter = 1">1</a></li>
-                <li><a class="block" id="block_2" href="#" @click="counter = 2">2</a></li>
-                <li><a class="block" id="block_3" href="#" @click="counter = 3">3</a></li>
-                <li><a class="block" id="block_4" href="#" @click="counter = 4">4</a></li>
-                <li><a class="block" id="block_5" href="#" @click="counter = 5">5</a></li>
-                <li><a href="#" @click="counter++">...</a></li>
-            </ul>   
+        <footer class="foter_container"> 
+            <div>
+                <ul @click="addCounter()">
+                    <li><a href="#" @click="counter--">...</a></li>
+                    <li><a class="block" id="block_1" href="#" @click="counter = 1">1</a></li>
+                    <li><a class="block" id="block_2" href="#" @click="counter = 2">2</a></li>
+                    <li><a class="block" id="block_3" href="#" @click="counter = 3">3</a></li>
+                    <li><a class="block" id="block_4" href="#" @click="counter = 4">4</a></li>
+                    <li><a class="block" id="block_5" href="#" @click="counter = 5">5</a></li>
+                    <li><a href="#" @click="counter++">...</a></li>
+                </ul>
+            </div>
         </footer>
+
     </div>
 </template>
 
@@ -149,7 +152,7 @@ export default {
     }
 .main{
     max-width: 1000px;
-    margin: 0px auto 0 auto
+    margin: 0px auto 100px auto
 }
     @media( max-width: 1000px ){
         .main{
@@ -168,7 +171,7 @@ export default {
     }
 .profile{
     display: inline-block;
-    margin: 0px 10px 0px 10px;
+    margin: 0px 10px 10px 10px;
     width: 440px;
     height: 380px;
 }
@@ -279,45 +282,17 @@ export default {
     left: 35%;
     background: inherit;  
 }
-.footer {
-    max-width: 1000px;
-    position: relative;
-	height: 45px;
-    margin: 20px auto 0px auto;
-    width: 900px;
-    border-radius: 300px;
-	background-image: radial-gradient(
-                                        circle at 99.83% 31.86%,
-                                        #ffffff 0, 
-                                        #ffffff 8.33%, 
-                                        #ffffff 16.67%, 
-                                        #ffffff 25%, 
-                                        #ffffff 33.33%, 
-                                        #ffffff 41.67%, 
-                                        #ffffff 50%, 
-                                        #e1ede9 58.33%, 
-                                        #c9ded5 66.67%, 
-                                        #b6d0c1 75%, 
-                                        #a7c4b0 83.33%, 
-                                        #9dbba0 91.67%, 
-                                        #98b393 100%);
-	
+.foter_container{
+    width: 100%;
+    height: 60px;
+    background: rgba(18, 18, 18, 0.8);
+    backdrop-filter: blur(50px);
+    transform: translateZ(0px);
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    
 }
-    @media (max-width: 1000px){
-        .footer{
-            width: 660px;
-        }
-    }
-    @media (max-width: 768px){
-        .footer{
-            width: 440px;
-        }
-    }
-    @media (max-width: 480px){
-        .footer{
-            width: 320px;
-        }
-    }
 ul {
     position: absolute;
     top: 50%;
@@ -357,4 +332,6 @@ ul li a:hover {
     background-color: #4e4e4e;
     color: #fff
 }
+
+
 </style>
