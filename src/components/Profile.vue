@@ -37,8 +37,6 @@ export default {
             userName: {},
             img: {},
             view:{},
-
-
             profiles: {}
         }; 
     },
@@ -52,7 +50,6 @@ export default {
             .get(`https://api.unsplash.com/photos/?client_id=vSZ88YrTBknu6CphDdw2FVIyBVwNW_ZR3SYuAFMc67c`)
             .then(response => {
                 this.profiles = response.data[0]
-                
             }); 
         }, 
         localStorage(){
