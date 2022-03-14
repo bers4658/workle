@@ -1,29 +1,24 @@
 <template>
     <div>
-        <div class="body">
-            {{ profiles.id }}
-            <div class="profile">
-                <div>
-                    <img class="photo_profile" :src="userImg">
-                </div>
-                <div class="name">
-                    {{ userProfileName }}
-                </div>
-                <div class="user_name">
-                    @{{ userName }}
-                </div>
-                <div>
-                    <img class="img" :src="img">
-                </div>
-                <div class="views">
-                    <span>
-                        {{ view }}
-                    </span>
-                    <span id="eye"></span>
-                </div>
-         </div>
-    </div>
-</div>    
+        <div class="my_block">
+            <div>
+                <img class="my_photo" src="IMG_0594.png">
+            </div>
+            <div class="my_name">Горбунов Иван</div>
+        </div>
+        <header class="header">      
+            <div>
+                <img class="photo_profile" :src="profileImg">
+            </div>
+            <div>
+                <b>Name:</b> {{ profiles.name }}
+            </div>
+            <div>
+                <b>User name:</b> @{{ profiles.username }}
+            </div>
+        </header>
+        <h1>Workle</h1>
+    </div>    
 </template>
 
 <script>
@@ -32,108 +27,85 @@ export default {
     name: 'Profile',
     data() {
         return {
-            userImg: {},
-            userProfileName: {},
-            userName: {},
-            img: {},
-            view:{},
+            index: null,
+            profileImg: "",
             profiles: {}
         }; 
     },
     mounted(){  
+        this.localStorage(),
         this.loadImg(),
-        this.localStorage()
+        this.loadName()
     },
     methods: {
+        localStorage(){
+            this.index = JSON.parse(localStorage.getItem('index'))
+        },
         loadImg(){
             axios
             .get(`https://api.unsplash.com/photos/?client_id=vSZ88YrTBknu6CphDdw2FVIyBVwNW_ZR3SYuAFMc67c`)
             .then(response => {
-                this.profiles = response.data[0]
+                this.profileImg = response.data[this.index].user.profile_image.large
             }); 
         }, 
-        localStorage(){
-            this.userImg = JSON.parse(localStorage.getItem('userImg'))
-            this.userProfileName = JSON.parse(localStorage.getItem('userProfileName'))
-            this.userName = JSON.parse(localStorage.getItem('userName'))
-            this.img = JSON.parse(localStorage.getItem('img'))
-            this.view = JSON.parse(localStorage.getItem('view'))
-        },
+        loadName(){
+            axios
+            .get(`https://api.unsplash.com/photos/?client_id=vSZ88YrTBknu6CphDdw2FVIyBVwNW_ZR3SYuAFMc67c`)
+            .then(response => {
+                this.profiles = response.data[this.index].user
+            }); 
+        }, 
     },
 }
 </script>
 
 <style scoped>
-.body{
-    max-width: 1000px;
-    min-width: 320px;
-    margin-left: auto;
-    margin-right: auto;
+.header{
+    background: linear-gradient(to bottom, #003399 0%, #ffffff 100%);
+    border-radius: 10px;
 }
-.profile{
+.my_block{
+    position: absolute; 
+}
+    @media(max-width: 480px){
+        .my_block{
+            display: none;
+        }
+    }
+.my_photo{
+    position: relative;
     display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    margin: 0px 10px 0px 10px;
-    width: 320px;
-    height: 312px;
-}
-.photo_profile{
-    float: left;
-    margin: 10px;
+    margin: 20px 0px 0px 0px;
     border-radius: 100px;
     width: 30px;
     height: 30px;
 }
-.name{
-    position: absolute;
+.my_name{
+    display: inline-block;
+    position: relative;
     font-weight: bold;
-    float: left;
-    margin-top: 10px;
-    margin-left: 50px;
+    margin: 10px;
+    color: #333333;
 }
-.user_name{
-    position: absolute;
-    float: left;
-    margin-top: 25px;
-    margin-left: 50px;
+.photo_profile{
+    position: relative;
+    margin: 20px 0px 20px 0px;
+    border-radius: 100px;
+    width: 150px;
+    height: 150px;
 }
-.img{
-    width: 320px;
-    height: 230px;
- }
- .views{
-    float: right;
-    color: #8D8D8D;
- }
- #eye {
-  display: inline-block;
-  position: relative;
-  width: 0.7em; 
-  height: 0.7em; 
-  background: #8D8D8D; 
-  border-radius: 70% 0 / 70%;
-  transform: rotate(45deg);
-  margin-right: 10px;
-  margin-top: 3px;
-  margin-left: 5px;
-}
-#eye::before,
-#eye::after {
-  content: "";
-  position: absolute;
-  top: 20%;
-  left: 20%;
-  width: 60%;
-  height: 60%;
-  background: #fff;
-  border-radius: 100%;
-}
-#eye::after {
-  width: 30%;
-  height: 30%;
-  top: 35%;
-  left: 35%;
-  background: inherit; 
-}
+ h1{
+    text-shadow: 0 1px 0 #ccc,
+                 0 2px 0 #c9c9c9,
+                 0 3px 0 #bbb,
+                 0 4px 0 #b9b9b9,
+                 0 5px 0 #aaa,
+                 0 6px 1px rgba(0,0,0,.1),
+                 0 0 5px rgba(0,0,0,.1),
+                 0 1px 3px rgba(0,0,0,.3),
+                 0 3px 5px rgba(0,0,0,.2),
+                 0 5px 10px rgba(0,0,0,.25),
+                 0 10px 10px rgba(0,0,0,.2),
+                 0 20px 20px rgba(0,0,0,.15); 
+    }
 </style>

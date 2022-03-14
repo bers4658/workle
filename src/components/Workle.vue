@@ -1,19 +1,18 @@
 <template>
     <div>
-        <div class="header">
+        <header class="header">
             <img class="photo_profile" src="IMG_0594.png">
             <div class="name">Тестовое задание</div>
             <div class="user_name">Горбунов Иван</div>  
             <h1>Workle</h1>
-            
-        </div>
-        <div class="body">
-            <div class="profile" v-for="profile in profiles" :key="profile.id">
+        </header>
+        <main class="main">
+            <div v-for="(profile, index) in profiles" :key="profile.id" class="profile">
                 <div style="cursor: pointer">
                     <a
                         target="blank"
                         :href="`#/profile/${profile.id}`"
-                        @click="saveLocalStorage(profile)">
+                        @click="saveLocalStorage(index)">
                         <div>
                             <img class="photo_profile" :src="profile.user.profile_image.small">
                         </div>
@@ -35,8 +34,8 @@
                     <span id="eye"></span>
                 </div>
             </div>
-        </div> 
-         <div class="footer">
+        </main> 
+         <footer class="footer">
             <ul @click="addCounter()">
                 <li><a href="#" @click="counter--">...</a></li>
                 <li><a class="block" id="block_1" href="#" @click="counter = 1">1</a></li>
@@ -46,7 +45,7 @@
                 <li><a class="block" id="block_5" href="#" @click="counter = 5">5</a></li>
                 <li><a href="#" @click="counter++">...</a></li>
             </ul>   
-        </div>
+        </footer>
     </div>
 </template>
 
@@ -61,42 +60,19 @@ export default {
         }; 
     },
     mounted(){
-        this.loadImg()
+        this.loadPage()
     },
     methods: {
-        loadImg(){
+        loadPage(){
             axios
             .get(`https://api.unsplash.com/photos/?client_id=vSZ88YrTBknu6CphDdw2FVIyBVwNW_ZR3SYuAFMc67c`)
             .then(response => {
                 this.profiles = response.data
             });
         },
-        saveLocalStorage(profile){
-            this.saveProfileImageInLocalStorage(profile.user.profile_image.small)
-            this.saveProfileNameInLocalStorage(profile.user.name)
-            this.saveUserNameInLocalStorage(profile.user.name)
-            this.saveImageInLocalStorage(profile.urls.small)
-            this.saveViewInLocalStorage(profile.likes)
-        },
-        saveProfileImageInLocalStorage(img){
-            let parsedUserImg = JSON.stringify(img)
-            localStorage.setItem("userImg",parsedUserImg)
-        },
-        saveProfileNameInLocalStorage(name){
-            let parsedProfileUserName = JSON.stringify(name)
-            localStorage.setItem("userProfileName",parsedProfileUserName)
-        },
-        saveUserNameInLocalStorage(userName){
-            let parsedProfileUserName = JSON.stringify(userName)
-            localStorage.setItem("userName",parsedProfileUserName)
-        },
-        saveImageInLocalStorage(img){
-            let parsedImg = JSON.stringify(img)
-            localStorage.setItem("img",parsedImg)
-        },
-        saveViewInLocalStorage(view){
-            let parsedView = JSON.stringify(view)
-            localStorage.setItem("view",parsedView)
+        saveLocalStorage(index){
+            let parsedIndex = JSON.stringify(index)
+            localStorage.setItem("index",parsedIndex)
         },
         addCounter(){
             let blocks = document.querySelectorAll('.block')
@@ -122,10 +98,22 @@ export default {
     max-width: 1000px;
     position: relative;
 	height: 50px;
-	background-color: #a1a1a1;
-	margin: 0px auto 0px auto;
+    margin: 0px auto 0px auto;
     width: 900px;
     color: #1b0a4b;
+    border-radius: 300px;
+    background-image: radial-gradient(
+                                        circle at 0% 0%,
+                                        #ffffff 0, 
+                                        #ffffff 12.5%, 
+                                        #ffffff 25%, 
+                                        #ffffff 37.5%, 
+                                        #ffffff 50%, 
+                                        #e5efec 62.5%, 
+                                        #cee1da 75%, 
+                                        #bcd5c8 87.5%,
+                                        #adcab8 100%);
+	
 }
     @media (max-width: 1000px){
         .header{
@@ -143,6 +131,9 @@ export default {
         }
     }
     .header h1 {
+        position: relative;
+        float: right;
+        margin: 3px 10px 0px 0px ;
         text-shadow: 0 1px 0 #ccc,
                      0 2px 0 #c9c9c9,
                      0 3px 0 #bbb,
@@ -155,27 +146,23 @@ export default {
                      0 5px 10px rgba(0,0,0,.25),
                      0 10px 10px rgba(0,0,0,.2),
                      0 20px 20px rgba(0,0,0,.15);
-        position: relative;
-        float: right;
-        margin: 3px 10px 0px 0px ;
-        
     }
-.body{
+.main{
     max-width: 1000px;
     margin: 0px auto 0 auto
 }
     @media( max-width: 1000px ){
-        .body{
+        .main{
             max-width: 768px;
         }
     }
     @media( max-width: 768px){
-        .body{
+        .main{
             max-width: 480px;
         }
     }
     @media(max-width:480px ){
-        .body{
+        .main{
             max-width: 320px;
         }
     }
@@ -220,6 +207,7 @@ export default {
     font-weight: bold;
     float: left;
     margin: 10px 0px 0px 50px;
+    color: #333333;
 }
     @media(max-width: 320px){
         .name{
@@ -230,6 +218,7 @@ export default {
     position: absolute;
     float: left;
     margin: 25px 0px 0px 50px;
+    color: #8D8D8D;
 }
     @media(max-width: 320px){
         .user_name{
@@ -270,9 +259,7 @@ export default {
     background: #8D8D8D; 
     border-radius: 70% 0 / 70%;
     transform: rotate(45deg);
-    margin-right: 10px;
-    margin-top: 3px;
-    margin-left: 5px;
+    margin: 3px 10px 0px 5px;
 }
 #eye::before,
 #eye::after{
@@ -296,10 +283,25 @@ export default {
     max-width: 1000px;
     position: relative;
 	height: 45px;
-	background-color: #a1a1a1;
-    position: relative;
-	margin: 20px auto 0px auto;
+    margin: 20px auto 0px auto;
     width: 900px;
+    border-radius: 300px;
+	background-image: radial-gradient(
+                                        circle at 99.83% 31.86%,
+                                        #ffffff 0, 
+                                        #ffffff 8.33%, 
+                                        #ffffff 16.67%, 
+                                        #ffffff 25%, 
+                                        #ffffff 33.33%, 
+                                        #ffffff 41.67%, 
+                                        #ffffff 50%, 
+                                        #e1ede9 58.33%, 
+                                        #c9ded5 66.67%, 
+                                        #b6d0c1 75%, 
+                                        #a7c4b0 83.33%, 
+                                        #9dbba0 91.67%, 
+                                        #98b393 100%);
+	
 }
     @media (max-width: 1000px){
         .footer{
