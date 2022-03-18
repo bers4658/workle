@@ -48,7 +48,6 @@
                 </ul>
             </div>
         </footer>
-
     </div>
 </template>
 
@@ -332,6 +331,4 @@ ul li a:hover {
     background-color: #4e4e4e;
     color: #fff
 }
-
-
 </style>
