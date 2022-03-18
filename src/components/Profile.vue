@@ -17,7 +17,8 @@
                 <b>User name:</b> @{{ profiles.username }}
             </div>
         </header>
-        <h1>Workle</h1>
+        <h1>Горбунов Иван</h1>
+        <h1>Тестовое задание</h1>
     </div>    
 </template>
 
@@ -27,9 +28,7 @@ export default {
     name: 'Profile',
     data() {
         return {
-            index: null,
-            profileImg: "",
-            profiles: {}
+            profiles: {},
         }; 
     },
     mounted(){  
@@ -54,8 +53,8 @@ export default {
             .then(response => {
                 this.profiles = response.data[this.index].user
             }); 
-        }, 
-    },
+        }  
+    }
 }
 </script>
 

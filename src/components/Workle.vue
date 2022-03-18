@@ -4,13 +4,12 @@
             <img class="photo_profile" src="IMG_0594.png">
             <div class="name">Тестовое задание</div>
             <div class="user_name">Горбунов Иван</div>  
-            <h1>Workle</h1>
+            <h1>Горбунов Иван</h1>
         </header>
         <main class="main">
             <div v-for="(profile, index) in profiles" :key="profile.id" class="profile">
                 <div style="cursor: pointer">
-                    <a
-                        target="blank"
+                    <a target="blank"
                         :href="`#/profile/${profile.id}`"
                         @click="saveLocalStorage(index)">
                         <div>
@@ -35,18 +34,14 @@
                 </div>
             </div>
         </main> 
-        <footer class="foter_container"> 
-            <div>
-                <ul @click="addCounter()">
-                    <li><a href="#" @click="counter--">...</a></li>
-                    <li><a class="block" id="block_1" href="#" @click="counter = 1">1</a></li>
-                    <li><a class="block" id="block_2" href="#" @click="counter = 2">2</a></li>
-                    <li><a class="block" id="block_3" href="#" @click="counter = 3">3</a></li>
-                    <li><a class="block" id="block_4" href="#" @click="counter = 4">4</a></li>
-                    <li><a class="block" id="block_5" href="#" @click="counter = 5">5</a></li>
-                    <li><a href="#" @click="counter++">...</a></li>
-                </ul>
-            </div>
+        <footer class="foter_container">           
+            <div v-for="(page, index) in profiles" :key="page" class="page">
+                <a @click="clickButton(page)">
+                    <ul v-bind:class="{'active': page.isActivePage}">
+                        {{ index + 1 }} 
+                    </ul>
+                </a>
+            </div>            
         </footer>
     </div>
 </template>
@@ -57,8 +52,7 @@ export default {
     name: 'Workle',
     data() {
         return {
-            profiles: {},
-            counter: 1
+            profiles: {}
         }; 
     },
     mounted(){
@@ -70,33 +64,25 @@ export default {
             .get(`https://api.unsplash.com/photos/?client_id=vSZ88YrTBknu6CphDdw2FVIyBVwNW_ZR3SYuAFMc67c`)
             .then(response => {
                 this.profiles = response.data
+                this.profiles[0].isActivePage = true
             });
         },
         saveLocalStorage(index){
             let parsedIndex = JSON.stringify(index)
             localStorage.setItem("index",parsedIndex)
         },
-        addCounter(){
-            let blocks = document.querySelectorAll('.block')
-            for(let i = 1; i < blocks.length; i++) {
-                blocks[i].addEventListener('click', () => {
-                    this.counter = i
-                    this.claerActiveBlock(blocks)
-                    blocks[i].classList.add('active')             
-                })
+        clickButton(page){
+            for(let i = 0; i < this.profiles.length; i++){
+                this.profiles[i].isActivePage = false
             }
-        },
-        claerActiveBlock(blocks){
-            blocks.forEach((blockColor) => {
-                blockColor.classList.remove('active')
-            })
+            page.isActivePage = true
         }
-    },
+    }
 }
 </script>
 
 <style scoped>
-.header {
+.header{
     max-width: 1000px;
     position: relative;
 	height: 50px;
@@ -117,22 +103,22 @@ export default {
                                         #adcab8 100%);
 	
 }
-    @media (max-width: 1000px){
+    @media(max-width: 1000px){
         .header{
             width: 660px;
         }
     }
-    @media (max-width: 768px){
+    @media(max-width: 768px){
         .header{
             width: 440px;
         }
     }
-    @media (max-width: 480px){
+    @media(max-width: 480px){
         .header{
             width: 320px;
         }
     }
-    .header h1 {
+    .header h1{
         position: relative;
         float: right;
         margin: 3px 10px 0px 0px ;
@@ -153,12 +139,12 @@ export default {
     max-width: 1000px;
     margin: 0px auto 100px auto
 }
-    @media( max-width: 1000px ){
+    @media(max-width: 1000px ){
         .main{
             max-width: 768px;
         }
     }
-    @media( max-width: 768px){
+    @media(max-width: 768px){
         .main{
             max-width: 480px;
         }
@@ -174,19 +160,19 @@ export default {
     width: 440px;
     height: 380px;
 }
-    @media (max-width: 1000px){
+    @media(max-width: 1000px){
         .profile{
             width: 320px;
             height: 230px;
         }
     }
-    @media (max-width: 768px){
+    @media(max-width: 768px){
         .profile{
             width: 440px;
             height: 380px;
         }
     }
-    @media (max-width: 480px){
+    @media(max-width: 480px){
         .profile{
             width: 320px;
             height: 230px;
@@ -219,7 +205,7 @@ export default {
 .user_name{
     position: absolute;
     float: left;
-    margin: 25px 0px 0px 50px;
+    margin: 27px 0px 0px 50px;
     color: #8D8D8D;
 }
     @media(max-width: 320px){
@@ -231,25 +217,25 @@ export default {
     width: 440px;
     height: 300px;
 }
-    @media (max-width: 1000px){
+    @media(max-width: 1000px){
         .img{
             width: 320px;
             height: 230px;
         }
     }
-    @media (max-width: 768px){
+    @media(max-width: 768px){
         .img{
             width: 440px;
             height: 300px;
         }
     }
-    @media (max-width: 480px){
+    @media(max-width: 480px){
         .img{
             width: 320px;
             height: 230px;
         }
     }
- .views{
+.views{
     float: right;
     color: #8D8D8D;
 }
@@ -290,45 +276,39 @@ export default {
     position: fixed;
     bottom: 0px;
     left: 0px;
-    
+    padding: 0px 0px 0px 0px ; 
 }
-ul {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    margin: 0;
-    padding: 0;
-    border-radius: 25px;
-    background-color: #fff;
-    box-shadow: 0 15px 20px rgba(0,0,0,.5), 0 0 0 4px #727272;
+.page{
+    padding: 0px 0px 0px 0px;
+    margin: 0px 10px 0px 0px ;
+    font-weight: bold;
+    cursor: pointer;
+    width: 30px;
+    height: 0px;
+    background-color: rgba(18, 18, 18, 0.6);
+    border-radius: 5px;
+    color:  #fff;
+    display: inline-block;
 }
-ul li {
-    list-style: none;
+ul{
+    margin: 10px 0px 0px 0px;
+    padding: 10px 0px 10px 0px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    background-color:  rgba(18, 18, 18, 0);
+    border-radius: 5px;
 }
-ul li a {
-    display: block;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
-    background-color: #fff;
-    color: #262626;
-    text-decoration: none;
-    border-radius: 4px;
-    margin: 5px;
-    box-shadow: inset 0 5px 10px rgba(0,0,0,.1), 0 2px 5px rgba(0,0,0,.5);
+ul:hover{
+    background-color: rgb(36, 36, 36, 0.8);
+    backdrop-filter: blur(50px);
+    transform: translateZ(0px);
+    color: #fff;
 }
-ul li:first-child a {
-    border-radius: 20px 0 0 20px;
+.active{
+    background-color: rgb(36, 36, 36, 0.8);
 }
-ul li:last-child a {
-    border-radius: 0 20px 20px 0;
-}
-ul li a.active,
-ul li a:hover {
-    background-color: #4e4e4e;
-    color: #fff
+a{
+    color:rgba(18, 18, 18, 0) ;
 }
 </style>
